@@ -5,6 +5,7 @@ import config from './config';
 import { userRoute } from './module/user/user.route';
 import { propertiesRoute } from './module/property/property.route';
 import { landlordRoute } from './module/landlord/landlord.route';
+import { categoryRoutes } from './module/category/category.route';
 
 const app: Application = express();
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 
 app.use("/api/auth", userRoute);
 app.use("/api/properties", propertiesRoute);
+app.use("/api/categories", categoryRoutes);
 app.use("/api/landlord", landlordRoute);
  
 app.get('/', async (req:Request, res:Response ) => {
