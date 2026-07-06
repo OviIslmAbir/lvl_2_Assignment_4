@@ -3,3 +3,5 @@ node_modules
 .env
 
 /generated/prisma
+src/property/property.controller.ts
+src/property/property.service.ts

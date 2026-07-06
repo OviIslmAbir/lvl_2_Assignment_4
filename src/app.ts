@@ -3,6 +3,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import config from './config';
 import { userRoute } from './module/user/user.route';
+import { propertiesRoute } from './module/property/property.route';
+import { landlordRoute } from './module/landlord/landlord.route';
 
 const app: Application = express();
 
@@ -15,7 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/auth", userRoute);
-
+app.use("/api/properties", propertiesRoute);
+app.use("/api/landlord", landlordRoute);
  
 app.get('/', async (req:Request, res:Response ) => {
     res.send('Welcome to my backend project Rent Nest !!!');
