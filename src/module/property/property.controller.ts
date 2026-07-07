@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 import { propertyService } from "./property.service";
 
-// Helper: safely extract a string param/query value
+
 const getIdParam = (req: Request): string => {
   const { id } = req.params;
   if (!id || Array.isArray(id)) {
