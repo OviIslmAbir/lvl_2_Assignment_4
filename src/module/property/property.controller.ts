@@ -3,17 +3,6 @@ import httpStatus from "http-status";
 import { propertyService } from "./property.service";
 
 
-const getIdParam = (req: Request): string => {
-  const { id } = req.params;
-  if (!id || Array.isArray(id)) {
-    throw {
-      statusCode: httpStatus.BAD_REQUEST,
-      message: "Valid property id is required",
-    };
-  }
-  return id;
-};
-
 const createProperty = async (req: Request, res: Response) => {
   try {
     const result = await propertyService.createPropertyFromDB(
@@ -56,7 +45,15 @@ const getAllProperties = async (req: Request, res: Response) => {
 
 const getSingleProperty = async (req: Request, res: Response) => {
   try {
-    const id = getIdParam(req);
+    const id = req.params.id as string;
+
+    if (!id) {
+      throw {
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Property id is required",
+      };
+    }
+
     const result = await propertyService.getSinglePropertyFromDB(id);
 
     res.status(httpStatus.OK).json({
@@ -72,10 +69,17 @@ const getSingleProperty = async (req: Request, res: Response) => {
     });
   }
 };
-
 const updateProperty = async (req: Request, res: Response) => {
   try {
-    const id = getIdParam(req);
+    const id = req.params.id as string;
+
+    if (!id) {
+      throw {
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Property id is required",
+      };
+    }
+
     const result = await propertyService.updatePropertyFromDB(
       id,
       req.user!.id,
@@ -98,7 +102,15 @@ const updateProperty = async (req: Request, res: Response) => {
 
 const deleteProperty = async (req: Request, res: Response) => {
   try {
-    const id = getIdParam(req);
+    const id = req.params.id as string;
+
+    if (!id) {
+      throw {
+        statusCode: httpStatus.BAD_REQUEST,
+        message: "Property id is required",
+      };
+    }
+
     const result = await propertyService.deletePropertyFromDB(id, req.user!.id);
 
     res.status(httpStatus.OK).json({
