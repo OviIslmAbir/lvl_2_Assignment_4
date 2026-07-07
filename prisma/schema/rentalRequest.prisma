@@ -12,6 +12,8 @@ model RentalRequest {
 
   message String? @db.Text
 
+  totalAmount Float? 
+
   status RentalStatus @default(PENDING)
 
   payment Payment?

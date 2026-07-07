@@ -7,6 +7,7 @@ import { propertiesRoute } from './module/property/property.route';
 import { landlordRoute } from './module/landlord/landlord.route';
 import { categoryRoutes } from './module/category/category.route';
 import { adminRoutes } from './module/Admin/admin.route';
+import { rentalRoute } from './module/rental/rental.route';
 
 const app: Application = express();
 
@@ -23,6 +24,7 @@ app.use("/api/properties", propertiesRoute);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/landlord", landlordRoute);
 app.use("/api/admin", adminRoutes);
+app.use("/api/rentals", rentalRoute);
  
 app.get('/', async (req:Request, res:Response ) => {
     res.send('Welcome to my backend project Rent Nest !!!');
