@@ -1,8 +1,11 @@
- import httpStatus from "http-status";
+import httpStatus from "http-status";
 import ApiError from "../../error/apiError";
 import { prisma } from "../../lib/prisma";
 import { IRentalRequest } from "./rental.interface";
-import { RentalStatus } from "../../../generated/prisma/client";
+import {
+  RentalStatus,
+  PropertyStatus,
+} from "../../../generated/prisma/client";
 
 const createRentalRequestFromDB = async (
   payload: IRentalRequest,
@@ -18,6 +21,15 @@ const createRentalRequestFromDB = async (
     throw new ApiError(httpStatus.NOT_FOUND, "Property not found");
   }
 
+  // Property availability check
+  if (property.status !== PropertyStatus.AVAILABLE) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      "This property is not available for rent."
+    );
+  }
+
+  // Duplicate request check
   const existingRequest = await prisma.rentalRequest.findFirst({
     where: {
       tenantId,
@@ -31,17 +43,38 @@ const createRentalRequestFromDB = async (
   if (existingRequest) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
-      "You already requested this property"
+      "You have already submitted a rental request for this property."
     );
   }
 
   const result = await prisma.rentalRequest.create({
     data: {
       tenantId,
-      ...payload,
+      propertyId: payload.propertyId,
+      moveInDate: payload.moveInDate,
+      duration: payload.duration,
+      message: payload.message,
     },
     include: {
-      property: true,
+      tenant: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      property: {
+        include: {
+          category: true,
+          landlord: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
     },
   });
 
@@ -54,7 +87,11 @@ const getMyRentalRequestsFromDB = async (tenantId: string) => {
       tenantId,
     },
     include: {
-      property: true,
+      property: {
+        include: {
+          category: true,
+        },
+      },
       payment: true,
     },
     orderBy: {
@@ -73,7 +110,18 @@ const getSingleRentalRequestFromDB = async (
       tenantId,
     },
     include: {
-      property: true,
+      property: {
+        include: {
+          category: true,
+          landlord: {
+            select: {
+              id: true,
+              name: true,
+              email: true,
+            },
+          },
+        },
+      },
       payment: true,
     },
   });
