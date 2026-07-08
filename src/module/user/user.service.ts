@@ -4,22 +4,26 @@ import { prisma } from "../../lib/prisma";
 import httpStatus from "http-status";
 import jwt, { SignOptions } from "jsonwebtoken"
 import { ILoginUser } from "./user.interface";
-const registerUserFromDB = async (payload: any) => {
+import { UserRole } from "../../../generated/prisma/enums"; 
 
-    const {
-        name,
-        email,
-        password,
-        role,
-        phone,
-        address,
-        profileImage
-    } = payload;
+const registerUserFromDB = async (payload: any) => {
+    const { name, email, password, role } = payload;
+
+    if (role === UserRole.ADMIN || role === "ADMIN") {
+        const error: any = new Error("You cannot register as an ADMIN through this route.");
+        error.statusCode = httpStatus.FORBIDDEN; 
+        throw error;
+    }
+
+
+    if (role !== UserRole.TENANT && role !== UserRole.LANDLORD) {
+        const error: any = new Error("Invalid role. Role must be either TENANT or LANDLORD.");
+        error.statusCode = httpStatus.BAD_REQUEST; 
+        throw error;
+    }
 
     const isUserExists = await prisma.user.findUnique({
-    where: {
-        email,
-    },
+        where: { email },
     });
 
     if (isUserExists) {
@@ -38,20 +42,13 @@ const registerUserFromDB = async (payload: any) => {
             name,
             email,
             password: hashedPassword,
-            role,
-            phone,
-            address,
-            profileImage
+            role, 
         }
     });
 
     const user = await prisma.user.findUnique({
-        where: {
-            id: createdUser.id
-        },
-        omit: {
-            password: true
-        }
+        where: { id: createdUser.id },
+        omit: { password: true }
     });
 
     return user;

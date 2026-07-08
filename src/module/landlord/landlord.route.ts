@@ -4,6 +4,7 @@ import { auth } from "../../middleware/auth";
 import { UserRole } from "../../../generated/prisma/client";
 import { propertyController } from "../property/property.controller";
 import { rentalController } from "../rental/rental.controller";
+import { landlordController } from "./landlord.controller";
 
 
 const router = Router();
@@ -36,5 +37,12 @@ router.patch(
   auth(UserRole.LANDLORD),
   rentalController.updateRentalRequestStatus
 );
+
+router.get(
+  "/reviews",
+  auth(UserRole.LANDLORD),
+  landlordController.getLandlordReviews
+);
+
 
 export const landlordRoute = router;
