@@ -29,5 +29,4 @@ enum PaymentStatus {
 
 enum PaymentProvider {
   STRIPE
-  SSLCOMMERZ
 }
