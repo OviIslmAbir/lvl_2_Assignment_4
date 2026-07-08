@@ -61,9 +61,56 @@ const getSingleRentalRequest = async (req: Request, res: Response) => {
     });
   }
 };
+const getLandlordRequests = async (req: Request, res: Response) => {
+  try {
+    const result = await rentalService.getLandlordRequestsFromDB(
+      req.user!.id
+    );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Rental requests retrieved successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message,
+      errorDetails: error.message,
+    });
+  }
+};
+
+const updateRentalRequestStatus = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const result =
+      await rentalService.updateRentalRequestStatusFromDB(
+        req.params.id as string,
+        req.user!.id,
+        req.body.status
+      );
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Rental request updated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || 500).json({
+      success: false,
+      message: error.message,
+      errorDetails: error.message,
+    });
+  }
+};
 
 export const rentalController = {
   createRentalRequest,
   getMyRentalRequests,
   getSingleRentalRequest,
+  getLandlordRequests,
+  updateRentalRequestStatus,
 };
