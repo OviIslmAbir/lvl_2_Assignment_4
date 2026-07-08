@@ -99,6 +99,31 @@ const loginUserFromDB = async (payload: ILoginUser) => {
         accessToken,
     };
 };
+const updateProfileInDB = async (id: string, payload: any) => {
+
+    const { name, phone, address, profileImage } = payload;
+
+    await prisma.user.findUniqueOrThrow({
+        where: { id },
+    });
+
+
+    const updatedUser = await prisma.user.update({
+        where: { id },
+        data: {
+            name,
+            phone,
+            address,
+            profileImage
+        },
+        omit: {
+            password: true 
+        }
+    });
+
+    return updatedUser;
+};
+
 const getMeFromDB = async (id: string) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -115,5 +140,6 @@ const getMeFromDB = async (id: string) => {
 export const userService = {
     registerUserFromDB,
     loginUserFromDB,
-    getMeFromDB
+    getMeFromDB,
+    updateProfileInDB
 };

@@ -49,6 +49,25 @@ const loginUser = async (req: Request, res: Response) => {
     });
   }
 };
+const updateProfile = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user!.id; 
+    const result = await userService.updateProfileInDB(userId, req.body);
+
+    res.status(httpStatus.OK).json({
+      success: true,
+      message: "Profile updated successfully",
+      data: result,
+    });
+  } catch (error: any) {
+    res.status(error.statusCode || httpStatus.INTERNAL_SERVER_ERROR).json({
+      success: false,
+      message: error.message || "Something went wrong",
+      errorDetails: error.message,
+    });
+  }
+};
+
 const getMe = async (req: Request, res: Response) => {
   try {
     const result = await userService.getMeFromDB(req.user!.id);
@@ -70,5 +89,6 @@ const getMe = async (req: Request, res: Response) => {
 export const userController = {
   registerUser,
   loginUser,
-    getMe
+    getMe,
+    updateProfile
 };
