@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { rentalService } from "./rental.service";
+import { rentalService } from "./rental.service.js";
 
 const createRentalRequest = async (req: Request, res: Response) => {
   try {

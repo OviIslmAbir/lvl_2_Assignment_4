@@ -2,9 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import httpStatus from "http-status";
     
-import config from "../config";
-import { prisma } from "../lib/prisma";
-import { UserRole, UserStatus } from "../../generated/prisma/browser";
+import config from "../config/index.js";
+import { prisma } from "../lib/prisma.js";
+import { UserRole, UserStatus } from "../../generated/prisma/enums.js";
 
 declare global {
   namespace Express {

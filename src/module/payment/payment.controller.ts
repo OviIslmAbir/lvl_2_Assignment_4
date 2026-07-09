@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { paymentService } from "./payment.service";
+import { paymentService } from "./payment.service.js";
 
 const createPayment = async (
   req: Request,

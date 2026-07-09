@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { userService } from "./user.service";
+import { userService } from "./user.service.js";
 
 const registerUser = async (req: Request, res: Response) => {
   try {

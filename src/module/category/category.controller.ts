@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { categoryService } from "./category.service";
+import { categoryService } from "./category.service.js";
 
 const createCategory = async (req: Request, res: Response) => {
   try {

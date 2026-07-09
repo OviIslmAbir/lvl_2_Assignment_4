@@ -4,11 +4,11 @@ import {
   PaymentProvider,
   PaymentStatus,
   RentalStatus,
-} from "../../../generated/prisma/client";
-import config from "../../config";
-import ApiError from "../../error/apiError";
-import { prisma } from "../../lib/prisma";
-import { IPayment } from "./payment.interface";
+} from "../../../generated/prisma/enums.js";
+import config from "../../config/index.js";
+import ApiError from "../../error/apiError.js";
+import { prisma } from "../../lib/prisma.js";
+import { IPayment } from "./payment.interface.js";
 
 const stripe = new Stripe(config.stripe_secret_key);
 

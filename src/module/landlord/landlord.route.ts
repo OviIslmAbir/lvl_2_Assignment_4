@@ -1,10 +1,10 @@
 // landlord.route.ts (landlord only)
 import { Router } from "express";
-import { auth } from "../../middleware/auth";
-import { UserRole } from "../../../generated/prisma/client";
-import { propertyController } from "../property/property.controller";
-import { rentalController } from "../rental/rental.controller";
-import { landlordController } from "./landlord.controller";
+import { auth } from "../../middleware/auth.js";
+import { UserRole } from "../../../generated/prisma/enums.js";
+import { propertyController } from "../property/property.controller.js";
+import { rentalController } from "../rental/rental.controller.js";
+import { landlordController } from "./landlord.controller.js";
 
 
 const router = Router();

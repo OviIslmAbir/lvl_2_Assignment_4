@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { propertyService } from "./property.service";
+import { propertyService } from "./property.service.js";
 
 
 const createProperty = async (req: Request, res: Response) => {

@@ -1,7 +1,7 @@
 import express from "express";
-import { categoryController } from "./category.controller";
-import { auth } from "../../middleware/auth";
-import { UserRole } from "../../../generated/prisma/client";
+import { categoryController } from "./category.controller.js";
+import { auth } from "../../middleware/auth.js";
+import { UserRole } from "../../../generated/prisma/enums.js";
 
 
 const router = express.Router();

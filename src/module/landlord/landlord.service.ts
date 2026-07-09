@@ -1,4 +1,4 @@
-import { prisma } from "../../lib/prisma";
+import { prisma } from "../../lib/prisma.js";
 
 const getLandlordReviewsFromDB = async (landlordId: string) => {
   const result = await prisma.review.findMany({

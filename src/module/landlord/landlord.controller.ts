@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { landlordService } from "./landlord.service";
+import { landlordService } from "./landlord.service.js";
 
 const getLandlordReviews = async (
   req: Request,

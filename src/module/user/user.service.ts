@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
-import config from "../../config";
-import { prisma } from "../../lib/prisma";
+import config from "../../config/index.js";
+import { prisma } from "../../lib/prisma.js";
 import httpStatus from "http-status";
 import jwt, { SignOptions } from "jsonwebtoken"
-import { ILoginUser } from "./user.interface";
-import { UserRole } from "../../../generated/prisma/enums"; 
+import { ILoginUser } from "./user.interface.js";
+import { UserRole } from "../../../generated/prisma/enums.js"; 
 
 const registerUserFromDB = async (payload: any) => {
     const { name, email, password, role } = payload;

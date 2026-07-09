@@ -1,8 +1,8 @@
 import httpStatus from "http-status";
 
-import ApiError from "../../error/apiError";
-import { prisma } from "../../lib/prisma";
-import { UserStatus } from "../../../generated/prisma/client";
+import ApiError from "../../error/apiError.js";
+import { prisma } from "../../lib/prisma.js";
+import { UserStatus } from "../../../generated/prisma/enums.js";
 
 const getAllUsersFromDB = async () => {
   return await prisma.user.findMany({

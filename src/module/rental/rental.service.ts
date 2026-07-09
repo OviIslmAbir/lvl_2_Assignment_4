@@ -1,11 +1,11 @@
 import httpStatus from "http-status";
-import ApiError from "../../error/apiError";
-import { prisma } from "../../lib/prisma";
-import { IRentalRequest } from "./rental.interface";
+import ApiError from "../../error/apiError.js";
+import { prisma } from "../../lib/prisma.js";
+import { IRentalRequest } from "./rental.interface.js";
 import {
   RentalStatus,
   PropertyStatus,
-} from "../../../generated/prisma/client";
+} from "../../../generated/prisma/enums.js";
 
 const createRentalRequestFromDB = async (
   payload: IRentalRequest,

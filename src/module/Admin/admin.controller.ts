@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import httpStatus from "http-status";
-import { adminService } from "./admin.service";
+import { adminService } from "./admin.service.js";
 
 const getAllUsers = async (req: Request, res: Response) => {
   try {

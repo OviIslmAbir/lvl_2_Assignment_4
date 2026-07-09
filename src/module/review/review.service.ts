@@ -1,7 +1,7 @@
 import httpStatus from "http-status";
-import ApiError from "../../error/apiError";
-import { prisma } from "../../lib/prisma";
-import { IReview } from "./review.interface";
+import ApiError from "../../error/apiError.js";
+import { prisma } from "../../lib/prisma.js";
+import { IReview } from "./review.interface.js";
 
 const createReviewFromDB = async (
   payload: IReview,

@@ -1,7 +1,9 @@
-import { Prisma, PropertyStatus } from "../../../generated/prisma/client";
+import { PropertyStatus }  from "../../../generated/prisma/enums.js";
+
 import httpStatus from "http-status";
-import { prisma } from "../../lib/prisma";
-import ApiError from "../../error/apiError";
+import { prisma } from "../../lib/prisma.js";
+import ApiError from "../../error/apiError.js";
+import { Prisma } from "../../../generated/prisma/client.js";
 
 const createPropertyFromDB = async (payload: any, landlordId: string) => {
   const result = await prisma.property.create({
@@ -14,7 +16,15 @@ const createPropertyFromDB = async (payload: any, landlordId: string) => {
 };
 
 const getAllPropertiesFromDB = async (query: Record<string, any>) => {
-  const { location, minPrice, maxPrice, type, page = 1, limit = 10 } = query;
+  const {
+    location,
+    minPrice,
+    maxPrice,
+    type,
+    amenities, 
+    page = 1,
+    limit = 10,
+  } = query;
 
   const andConditions: Prisma.PropertyWhereInput[] = [
     { status: PropertyStatus.AVAILABLE },
@@ -41,6 +51,16 @@ const getAllPropertiesFromDB = async (query: Record<string, any>) => {
   if (type) {
     andConditions.push({
       category: { name: { equals: type, mode: "insensitive" } },
+    });
+  }
+
+  if (amenities) {
+    const amenitiesArray = Array.isArray(amenities)
+      ? amenities
+      : String(amenities).split(",").map((a) => a.trim());
+
+    andConditions.push({
+      amenities: { hasEvery: amenitiesArray }, 
     });
   }
 
