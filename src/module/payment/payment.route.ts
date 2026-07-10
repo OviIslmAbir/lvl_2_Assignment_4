@@ -17,6 +17,22 @@ router.post(
   paymentController.stripeWebhook
 );
 
+
+router.get("/payment-success", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Payment completed successfully.",
+    paymentId: req.query.paymentId,
+  });
+});
+
+router.get("/payment-cancel", (req, res) => {
+  res.status(200).json({
+    success: false,
+    message: "Payment cancelled.",
+  });
+});
+
 router.get(
   "/",
   auth(UserRole.TENANT),

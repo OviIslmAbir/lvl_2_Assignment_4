@@ -90,9 +90,9 @@ const createPaymentSessionFromDB = async (
       metadata: {
         paymentId: payment.id,
       },
+success_url: `${config.app_url}/api/payments/payment-success?paymentId=${payment.id}`,
 
-      success_url: `${config.app_url}/payment-success?paymentId=${payment.id}`,
-      cancel_url: `${config.app_url}/payment-cancel`,
+cancel_url: `${config.app_url}/api/payments/payment-cancel`,
     });
 
     return {
